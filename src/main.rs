@@ -21,7 +21,8 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             Ok((conn, ldap)) => (conn, ldap),
             Err(e) => return Err(e),
         };
-        ldap3::drive!(conn);
+        let handle = tokio::spawn(async move { conn.drive().await.unwrap() });
+        // handle.await.unwrap();
 
         println!("    Connection established. Dropping.");
 
