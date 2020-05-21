@@ -8,3 +8,5 @@ edition = "2018"
 
 [dependencies]
 ldap3 = "0.7.0-alpha.7"
+# Same as ldap3's dependency
+tokio = { version = "0.2", features = ["dns", "macros", "io-util", "stream", "sync", "tcp", "time", "uds"] }
