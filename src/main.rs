@@ -28,6 +28,6 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
 
         std::mem::drop(ldap);
 
-        thread::sleep(Duration::from_millis(100));
+        tokio::time::delay_for(Duration::from_millis(100)).await;
     }
 }
