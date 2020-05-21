@@ -15,7 +15,7 @@ fn main() {
             .set_conn_timeout(timeout)
             .set_no_tls_verify(true);
 
-        let conn = LdapConn::with_settings(settings, url.as_str()).unwrap();
+        let mut conn = LdapConn::with_settings(settings, url.as_str()).unwrap();
         println!("    Binding using {:?}...", bind_dn);
         let bind = conn.simple_bind(&bind_dn, &bind_pw).unwrap();
 
