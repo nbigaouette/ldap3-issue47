@@ -282,6 +282,7 @@ name = "ldap3-issue47"
 version = "0.1.0"
 dependencies = [
  "ldap3",
+ "tokio",
 ]
 
 [[package]]
