@@ -245,8 +245,7 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 [[package]]
 name = "lber"
 version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a749954d43fcfb8d4381aa0c6cf291065053e0590d622f4f830393a9bd8278a5"
+source = "git+https://github.com/inejge/ldap3.git?rev=2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3#2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3"
 dependencies = [
  "byteorder",
  "bytes",
@@ -256,8 +255,7 @@ dependencies = [
 [[package]]
 name = "ldap3"
 version = "0.7.0-alpha.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "59362583ad012bb451084b3783af37a260fa280a962bbe52fa73b14d2fc702d2"
+source = "git+https://github.com/inejge/ldap3.git?rev=2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3#2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3"
 dependencies = [
  "async-trait",
  "bytes",
