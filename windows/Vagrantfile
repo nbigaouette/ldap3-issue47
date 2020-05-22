@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # To create this box:
+  #   vagrant box add \
+  #     --checksum 8896d48cb1c63c53d3e6484bba0a7a539818cf855dab7aeacabc243f004d7f63 \
+  #     --checksum-type sha256 \
+  #     windows10_x64_1809 \
+  #     MSEdgeWin10.box
+  config.vm.box = "windows10_x64_1809"
+
+  config.vm.hostname = "ldap3-issue47"
+
+  # Let Vagrant communicate with the VM using winrm (not ssh)
+  config.vm.guest = :windows
+  config.vm.communicator = "winrm"
+
+  # See https://az792536.vo.msecnd.net/vms/release_notes_license_terms_8_1_15.pdf
+  config.winrm.username = "IEUser"
+  config.winrm.password = "Passw0rd!"
+
+  # Mount parent directory (not current one) under /vagrant
+  config.vm.synced_folder "..", "/vagrant"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "ldap3 issue 47"
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = true
+
+    # Customize the virtual machine settings:
+    vb.cpus = 2
+    vb.memory = "2048"
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+  end
+
+  ########################################################################
+  #                         Provisioning
+  ########################################################################
+
+  config.vm.provision "file", source: "provision_common.ps1", destination: "C:\\provisioning\\provision_common.ps1"
+
+  # ----------------------------------------------------------------------
+  # OpenSSH
+  config.vm.provision "shell", path: "provision_ssh.ps1", upload_path: "C:\\provisioning\\provision_ssh.ps1", privileged: true
+
+  # ----------------------------------------------------------------------
+  # Visual C++ Build Tools
+  # From https://github.com/rust-lang/rustup.rs/#other-installation-methods
+  #     MSVC builds of rustup additionally require an installation
+  #     of Visual Studio 2019 or the Visual C++ Build Tools 2019. For
+  #     Visual Studio, make sure to check the "C++ tools" option. No
+  #     additional software installation is necessary for basic use
+  #     of the GNU build.
+  # https://visualstudio.microsoft.com/downloads/
+  # sha256: b356dde1e719dba8ab56c866a124015438c9a3987286d2fbb6fcfe360080ce22
+  config.vm.provision "shell", path: "provision_vs.ps1", upload_path: "C:\\provisioning\\provision_vs.ps1", privileged: true
+
+  # ----------------------------------------------------------------------
+  # Rust (requires Visual C++ Build Tools) first
+  config.vm.provision "file", source: "../rust-toolchain", destination: "C:\\provisioning\\rust-toolchain"
+  config.vm.provision "shell", path: "provision_rust.ps1", upload_path: "C:\\provisioning\\provision_rust.ps1"
+
+end
