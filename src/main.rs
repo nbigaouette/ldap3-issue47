@@ -1,6 +1,6 @@
-use std::{env, thread, time::Duration};
+use std::{env, time::Duration};
 
-use ldap3::{LdapConn, LdapConnAsync, LdapConnSettings};
+use ldap3::{LdapConnAsync, LdapConnSettings};
 
 #[tokio::main]
 async fn main() -> Result<(), ldap3::result::LdapError> {
@@ -14,9 +14,6 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             .set_conn_timeout(timeout)
             .set_no_tls_verify(true);
 
-        // Sync
-        // let conn = LdapConn::with_settings(settings, url.as_str()).unwrap();
-        // Async
         let (conn, ldap) = match LdapConnAsync::with_settings(settings, url.as_str()).await {
             Ok((conn, ldap)) => (conn, ldap),
             Err(e) => return Err(e),
