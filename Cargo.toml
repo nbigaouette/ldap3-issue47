@@ -10,3 +10,7 @@ edition = "2018"
 ldap3 = "0.7.0-alpha.7"
 # Same as ldap3's dependency
 tokio = { version = "0.2", features = ["dns", "macros", "io-util", "stream", "sync", "tcp", "time", "uds"] }
+
+
+[patch.crates-io]
+ldap3 = { git = 'https://github.com/inejge/ldap3.git', rev = '2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3' }
