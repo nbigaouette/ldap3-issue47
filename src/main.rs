@@ -22,11 +22,12 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             Err(e) => return Err(e),
         };
         let handle = tokio::spawn(async move { conn.drive().await.unwrap() });
-        // handle.await.unwrap();
 
         println!("    Connection established. Dropping.");
 
         std::mem::drop(ldap);
+
+        handle.await.unwrap();
 
         tokio::time::delay_for(Duration::from_millis(100)).await;
     }
