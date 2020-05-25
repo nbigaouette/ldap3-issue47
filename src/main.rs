@@ -14,7 +14,7 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             .set_conn_timeout(timeout)
             .set_no_tls_verify(true);
 
-        let (conn, ldap) = match LdapConnAsync::with_settings(settings, url.as_str()).await {
+        let (conn, mut ldap) = match LdapConnAsync::with_settings(settings, url.as_str()).await {
             Ok((conn, ldap)) => (conn, ldap),
             Err(e) => return Err(e),
         };
@@ -22,6 +22,7 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
 
         println!("    Connection established. Dropping.");
 
+        ldap.unbind().await.unwrap();
         std::mem::drop(ldap);
 
         handle.await.unwrap();
