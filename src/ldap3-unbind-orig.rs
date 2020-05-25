@@ -1,9 +1,9 @@
 use std::{env, time::Duration};
 
-use ldap3::{LdapConnAsync, LdapConnSettings};
+use ldap3orig::{LdapConnAsync, LdapConnSettings};
 
 #[tokio::main]
-async fn main() -> Result<(), ldap3::result::LdapError> {
+async fn main() -> Result<(), ldap3orig::result::LdapError> {
     let url = env::var("LDAP3_ISSUE47_URL").unwrap();
 
     loop {
@@ -18,14 +18,11 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             Ok((conn, ldap)) => (conn, ldap),
             Err(e) => return Err(e),
         };
-        let handle = tokio::spawn(async move { conn.drive().await.unwrap() });
+        let _handle = tokio::spawn(async move { conn.drive().await.unwrap() });
 
         println!("    Connection established. Dropping.");
 
         ldap.unbind().await.unwrap();
-        std::mem::drop(ldap);
-
-        handle.await.unwrap();
 
         tokio::time::delay_for(Duration::from_millis(100)).await;
     }
