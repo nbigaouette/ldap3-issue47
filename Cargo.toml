@@ -4,13 +4,28 @@ version = "0.1.0"
 authors = ["Nicolas Bigaouette <nbigaouette@elementai.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-ldap3 = "0.7.0-alpha.7"
-# Same as ldap3's dependency
+ldap3orig = { version = "0.7.0-alpha.7", package = "ldap3", optional = true }
+ldap3fixed = { git = "https://github.com/inejge/ldap3", rev = '2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3', package = "ldap3", optional = true }
 tokio = { version = "0.2", features = ["dns", "macros", "io-util", "stream", "sync", "tcp", "time", "uds"] }
 
+[features]
+default = []
+no-loop-fix = ["ldap3orig"]
+with-loop-fix = ["ldap3fixed"]
 
-[patch.crates-io]
-ldap3 = { git = 'https://github.com/inejge/ldap3.git', rev = '2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3' }
+[[bin]]
+name = "ldap3-unbind-orig"
+path = "src/ldap3-unbind-orig.rs"
+
+[[bin]]
+name = "ldap3-unbind-fixed"
+path = "src/ldap3-unbind-fixed.rs"
+
+[[bin]]
+name = "ldap3-drop-orig"
+path = "src/ldap3-drop-orig.rs"
+
+[[bin]]
+name = "ldap3-drop-fixed"
+path = "src/ldap3-drop-fixed.rs"

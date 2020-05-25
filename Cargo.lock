@@ -253,6 +253,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "lber"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a749954d43fcfb8d4381aa0c6cf291065053e0590d622f4f830393a9bd8278a5"
+dependencies = [
+ "byteorder",
+ "bytes",
+ "nom",
+]
+
+[[package]]
 name = "ldap3"
 version = "0.7.0-alpha.7"
 source = "git+https://github.com/inejge/ldap3.git?rev=2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3#2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3"
@@ -262,7 +273,31 @@ dependencies = [
  "futures",
  "futures-util",
  "lazy_static",
- "lber",
+ "lber 0.2.0 (git+https://github.com/inejge/ldap3.git?rev=2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3)",
+ "log",
+ "maplit",
+ "native-tls",
+ "nom",
+ "percent-encoding",
+ "thiserror",
+ "tokio",
+ "tokio-tls",
+ "tokio-util",
+ "url",
+]
+
+[[package]]
+name = "ldap3"
+version = "0.7.0-alpha.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "59362583ad012bb451084b3783af37a260fa280a962bbe52fa73b14d2fc702d2"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "futures",
+ "futures-util",
+ "lazy_static",
+ "lber 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "log",
  "maplit",
  "native-tls",
@@ -279,7 +314,8 @@ dependencies = [
 name = "ldap3-issue47"
 version = "0.1.0"
 dependencies = [
- "ldap3",
+ "ldap3 0.7.0-alpha.7 (git+https://github.com/inejge/ldap3.git?rev=2f88e03b9a7cd16b33a0a8feca9e472f593ca2e3)",
+ "ldap3 0.7.0-alpha.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "tokio",
 ]
 
