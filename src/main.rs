@@ -1,9 +1,8 @@
-use std::{env, time::Duration};
+use std::{env, thread, time::Duration};
 
-use ldap3::{LdapConnAsync, LdapConnSettings};
+use ldap3::{LdapConn, LdapConnSettings};
 
-#[tokio::main]
-async fn main() -> Result<(), ldap3::result::LdapError> {
+fn main() -> Result<(), ldap3::result::LdapError> {
     let url = env::var("LDAP3_ISSUE47_URL").unwrap();
 
     loop {
@@ -14,19 +13,13 @@ async fn main() -> Result<(), ldap3::result::LdapError> {
             .set_conn_timeout(timeout)
             .set_no_tls_verify(true);
 
-        let (conn, mut ldap) = match LdapConnAsync::with_settings(settings, url.as_str()).await {
-            Ok((conn, ldap)) => (conn, ldap),
-            Err(e) => return Err(e),
-        };
-        let handle = tokio::spawn(async move { conn.drive().await.unwrap() });
+        let mut ldap = LdapConn::with_settings(settings, url.as_str()).unwrap();
 
         println!("    Connection established. Dropping.");
 
-        ldap.unbind().await.unwrap();
+        ldap.unbind().unwrap();
         std::mem::drop(ldap);
 
-        handle.await.unwrap();
-
-        tokio::time::delay_for(Duration::from_millis(100)).await;
+        thread::sleep(Duration::from_millis(100));
     }
 }
