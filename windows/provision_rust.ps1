@@ -25,7 +25,7 @@ $downloadUrl = "https://dev-static.rust-lang.org/rustup/archive/$rustupVersion/$
 
 $setupFullPath = "$provisioningDirectory\$setupFilename"
 
-$toolchainFile = Resolve-Path "$PSScriptRoot\..\rust-toolchain"
+$toolchainFile = Resolve-Path "$PSScriptRoot\rust-toolchain"
 
 $toolchainVersion = Get-Content -Path $toolchainFile
 
