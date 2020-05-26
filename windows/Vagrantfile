@@ -1,13 +1,32 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# To install on Ubuntu 18.04.x LTS from scratch:
+#
+#   sudo apt install virtualbox
+#   sudo apt install vagrant
+#   sudo gem install winrm
+#   sudo gem install winrm-elevated
+#
+# Vagrantfile, four *.ps1 files, and the image file (see the next section) should
+# be in the same directory before executing "vagrant up".
+#
+# On some machines, Intel VT-x virtualization extensions, which Virtualbox needs,
+# are disabled by default, and must be enabled in the BIOS setup. If you're unsure
+# of VT-x status, reboot and check the BIOS settings.
+
 Vagrant.configure("2") do |config|
+  # The box is created from the Vagrant archive downloaded from Microsoft at
+  # <https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/>. At the time
+  # of writing, the image file in the archive is called "MSEdge - Win10.box". Unpack
+  # the archive in the directory with the Vagrantfile.
+  #
   # To create this box:
   #   vagrant box add \
   #     --checksum 8896d48cb1c63c53d3e6484bba0a7a539818cf855dab7aeacabc243f004d7f63 \
   #     --checksum-type sha256 \
   #     windows10_x64_1809 \
-  #     MSEdgeWin10.box
+  #     MSEdge\ -\ Win10.box
   config.vm.box = "windows10_x64_1809"
 
   config.vm.hostname = "ldap3-issue47"
